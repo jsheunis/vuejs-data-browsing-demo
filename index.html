@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <title>Dataset Hierarchy Browser</title>
+
+    <!-- Required Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="assets/style.css" />
+    <script src="https://kit.fontawesome.com/17e62561a1.js" crossorigin="anonymous"></script>
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"></script>
+
+    <!-- Required scripts -->
+    <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+    <!-- Template for dataset page -->
+    <script type="text/x-template" id="dataset-template">
+      <div>
+        <b-card border-variant="dark">
+          <b-card-body>
+            <b-card-title>
+              <span ><a class="newlink"><i class="fas fa-home"></i>{{selectedDataset.name}}</a></span>
+            </b-card-title>
+            <b-card-text>
+              <strong>ID:</strong> {{selectedDataset.id}}&nbsp;
+            </b-card-text>
+            <hr>
+            <b-row no-gutters>
+              <b-col md="9" style="text-align: justify;">
+                <b-card-text>
+                  <strong>Description:</strong><br>
+                  <span>{{selectedDataset.description}}</span>
+                </b-card-text>
+              </b-col>
+            </b-row>
+            <br>
+          </b-card-body>
+          <b-card-body>
+            <b-card-title>
+              Subdatasets
+            </b-card-title>
+              <span v-if="!selectedDataset.subdatasets || !selectedDataset.subdatasets.length"><em>There are no subdatasets listed for the current dataset</em></span>
+              <span v-else>
+                <b-card v-if="subdatasets_ready" v-for="ds in selectedDataset.subdatasets" v-bind:key="ds.id" border-variant="dark" header-bg-variant="transparent" no-body class="mb-2 pt-1">
+                  <template v-slot:header>
+                    <b-row no-gutters>
+                      <b-col align-h="center" align-v="center" md="1">
+                        <span class="xxlfont"><i class="fas fa-database"></i></span>
+                      </b-col>
+                      <b-col class="text-muted" md="7">
+                        <h5><a @click="selectDataset(ds, ds.dataset_id)" class="stretched-link">{{ds.name}}</a></h5>
+                        <b-card-text>
+                          <small>
+                            <strong>ID:</strong> {{ds.id}}&nbsp;
+                          </small>
+                        </b-card-text>
+                      </b-col>
+                    </b-row>
+                  </template>
+                </b-card>
+              </span>
+          </b-card-body>
+        </b-card>
+      </div>
+    </script>
+  </head>
+
+  <!-- ### -->
+  <body >
+    <style>
+      :root {
+        --link-color: #fba304;
+        --link-hover-color: #af7714;
+      }
+    </style>
+    <!-- Application root element -->
+    <b-container id="demo" >
+      <h1>Dataset hierarchy browser</h1>
+      <div>
+        <!-- <keep-alive :key="$route.fullPath" include="datasetView"> -->
+          <router-view :selected-dataset="selectedDataset"></router-view>
+        <!-- </keep-alive> -->
+      </div> 
+    </b-container>
+
+    <b-container>
+      <br>
+      <br>
+      <br>
+      <br>
+    </b-container>
+    <script src="assets/simple_test_vue_app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+{
+    "id": "dataset_1",
+    "name": "Top Level",
+    "description": "lorum ipsum ... 1",
+    "subdatasets": [
+        {
+            "id": "dataset_1a"
+        },
+        {
+            "id": "dataset_1b"
+        }
+    ]
+}
